@@ -18,6 +18,7 @@ function User() {
     const [followers, setFollowers] = useState([]);
     const [following, setFollowing] = useState([]);
     const [textFollow, setTextFollow] = useState("");
+    const [cart, setCart] = useState([]);
     const [heart, setHeart] = useState("");
 
     const comments = useRef(null);
@@ -68,11 +69,10 @@ function User() {
 
     const handleLikeOrDislike = async (idPost) => {
         const like = await setLikeOrDislike(token, idPost);
-        // like.liked === 0 ? setHeart(<i className="fa-regular fa-heart"></i>) : setHeart(<i className="fa-solid fa-heart"></i>);
-        // setHeart(prevHeart => like.liked === 0 ? <i className="fa-regular fa-heart"></i> : <i className="fa-solid fa-heart"></i>);
+        window.location.reload();
     }
 
-    const handleSubmitComment = async (idPost) => {
+    const handleSubmitComment = async (idPost, content) => {
         const data = {
             content: comments.current.value
         }
@@ -83,7 +83,7 @@ function User() {
             }
         })
         .then((response) => {
-            console.log(response.data);
+            window.location.reload();
         })
         .catch((error) => {
             console.log(error.response.data);
@@ -141,24 +141,38 @@ function User() {
                                         <div className="gallery-item" tabIndex="0" key={i}>
                                             <img src={`${API_URL}/${e.imageUrl}`} className="gallery-image" alt="" height={480} width={550} />
                                             <div className="row">
-                                                <div className="col-1">
+                                                <div className="col-2">
                                                     {e.likeds.find((element) => element.user.id == userId) != undefined ?
-                                                        <button type="button" className="btn" onClick={() => { handleLikeOrDislike(e.id) }}>
-                                                            <i className="fa-solid fa-heart"></i>
-                                                            {/* {heart} */}
-                                                        </button>
+                                                        <div className="d-flex align-items-center">
+                                                            <button type="button" className="btn" onClick={() => { handleLikeOrDislike(e.id) }}>
+                                                                <i className="fa-solid fa-heart"></i>
+                                                                {/* {heart} */}
+                                                            </button>
+                                                            <span>{e.likeds.length}</span>
+                                                        </div>
                                                         :
-                                                        <button type="button" className="btn" onClick={() => { handleLikeOrDislike(e.id) }}>
-                                                            <i className="fa-regular fa-heart"></i>
-                                                            {/* {heart} */}
-                                                        </button>
+                                                        <div className="d-flex align-items-center">
+                                                            <button type="button" className="btn pr-3" onClick={() => { handleLikeOrDislike(e.id) }}>
+                                                                <i className="fa-regular fa-heart"></i>
+                                                                {/* {heart} */}
+                                                            </button>
+                                                            <span>{e.likeds.length}</span>
+                                                        </div>
                                                     }
                                                 </div>
-                                                <div className="col-1">
-                                                    <button type="button" className="btn" data-bs-toggle="collapse" data-bs-target="#commentSpace" aria-expanded="false" aria-controls="collapseExample">
-                                                        <i className="fa-regular fa-comment"></i>
-                                                    </button>
+                                                <div className="col-4">
+                                                    <div className="d-flex align-items-center pl-10">
+                                                        <button type="button" className="btn" data-bs-toggle="collapse" data-bs-target="#commentSpace" aria-expanded="false" aria-controls="collapseExample">
+                                                            <i className="fa-regular fa-comment"></i>
+                                                        </button>
+                                                        <span>{e.comments.length}</span>
+                                                    </div>
                                                 </div>
+                                                <div className="cart">
+                                                    <ul>
+                                                        {cart.map(item => <li key={item}>{item}</li>)}
+                                                    </ul>
+                                                </div>    
                                                 <div className="collapse" id="commentSpace">
                                                     <div className="form-floating">
                                                         <div class="input-group">

@@ -46,7 +46,7 @@ function Register() {
               <input type="email" ref={email} placeholder="Email" />
               <input type="password" ref={password} placeholder="Mot de passe" />
               <input type="file" accept="image/*" onChange={handleImageChange} />
-              <button type='button' onClick={handleSubmit}>S'inscrire'</button>
+              <button type='button' onClick={handleSubmit}>S'inscrire</button>
               <p className="message">Déjà un compte ? <Link to="/login">Se connecter !</Link></p>
             </form>
           </div>

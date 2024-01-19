@@ -54,7 +54,7 @@ function Home() {
             </div>
           ))}
         </div>
-        <div className="mt-3">
+        {/* <div className="mt-3">
           <h3>marquee B</h3>
           <img src="img/post1.jpg" alt="post" />
             <div className="post-info">
@@ -71,7 +71,7 @@ function Home() {
                 <span>88</span>
               </div>
             </div>
-        </div>
+        </div> */}
       </div>
     </div>
   )
